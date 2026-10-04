@@ -1,0 +1,35 @@
+modLoader="lowcodefml"
+loaderVersion="[43,44)"
+license="MIT"
+
+[[mods]]
+modId="ic2_price_guard"
+version="2.0.0"
+displayName="IC2 Price Guard"
+authors="OpenAI"
+description='''
+Station-local configurable payment caps for the Villager-O-Mat.
+Defaults to 1. GUI rules for all villagers, professions, individual villagers
+and distinct trades (including enchanted books). Install on client and server.
+'''
+
+[[dependencies.ic2_price_guard]]
+modId="forge"
+mandatory=true
+versionRange="[43,44)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ic2_price_guard]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.2]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ic2_price_guard]]
+modId="ic2"
+mandatory=true
+versionRange="[1.19.2-2.1.2.1]"
+ordering="AFTER"
+side="BOTH"

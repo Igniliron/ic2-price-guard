@@ -1,0 +1,39 @@
+Validation scope — 2026-10-03
+
+Target: original IC2Classic-1.19.2-2.1.2.1.jar from the author's Modrinth release.
+Java: 17; bytecode target: 17.
+
+4250 assertions passed:
+- Price boundaries 1..64 and unlimited, all/profession/individual precedence.
+- Reset/inheritance and deterministic text persistence, station isolation.
+- Hook NBT save/load using game fixtures, rebinding after load.
+- Server event validation: open station menu, nearby villager, offer index,
+  paired event requirement and malformed packet rejection.
+- Stable trade identity across demand changes; distinct book enchantments
+  and levels; deterministic NBT key ordering.
+- Native GUI button construction/callback flow using client fixtures.
+- Four shipped Nashorn transformers applied to actual upstream IC2 classes,
+  using a Forge-compatible restricted Java class filter.
+- ASM BasicVerifier dataflow checks for all methods in the four transformed
+  classes, and verification of the added native network-field annotations.
+- Actual IC2 transaction helper executed after transformation with fixtures:
+  rejected prices never access inventory; simulation doesn't move items;
+  accepted trades use their actual payment; insufficient stock/full output
+  stay rejected; secondary payment retained; exceptions and resumed trading.
+- Isolated helper verified with ASM CheckClassAdapter and JVM -Xverify:all,
+  using SRG and named getter variants without automatic frame repair.
+
+Native APIs inspected in the original IC2 jar: GUI/ToolTipButton constructor,
+component target/trade list, station load/save/tick/client events, native
+integer packet transport, server menu validity and holder, network annotations,
+JEI extra-area collection through GuiWidget.box.
+
+Not a full game integration test. Minecraft/Forge was NOT launched, GUI was
+NOT visually inspected in-game, and an actual multiplayer round trip was
+NOT performed. Those remain deployment acceptance checks.
+
+Reproduce:
+python tests/run_tests.py /path/to/IC2Classic.jar /path/to/dependencies
+Dependency filenames: asm.jar, asm-tree.jar, asm-analysis.jar, asm-util.jar,
+asm-commons.jar (ASM 9.3), nashorn.jar (Nashorn 15.3). Test dependencies are not
+distributed in the addon. Only original addon classes are distributed.
